@@ -1,17 +1,28 @@
 import models.Asignatura;
 import models.Nota;
+import models.Utilidades;
+
+import static models.Utilidades.asignaturas;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            Asignatura a1 = new Asignatura("Bases de datos 1");
-            a1.addNota(new Nota(30, 5.3));
-            a1.addNota(new Nota(40, 2.8));
-            a1.addNota(new Nota(30, 6.7));
-            System.out.println(a1.getNotas());
-            System.out.println(a1.getPromedio());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            Utilidades.checkData();
+
+//            Asignatura a1 = new Asignatura("Java");
+//            Asignatura a2 = new Asignatura("BD");
+//
+//            a1.addNota(new Nota(30, 4.0));
+//            a2.addNota(new Nota(30, 2.0));
+//            a2.addNota(new Nota(40, 1.5));
+//
+//            asignaturas.add(a1);
+//            asignaturas.add(a2);
+            System.out.println(asignaturas);
+            Utilidades.writeData();
+
+        } catch (Exception ex) {
+            System.out.println("ERROR: " + ex.getMessage());
         }
     }
-}
+    }

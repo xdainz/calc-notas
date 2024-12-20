@@ -1,6 +1,5 @@
 package models;
 
-import java.security.KeyPair;
 import java.util.ArrayList;
 
 public class Asignatura {
@@ -60,5 +59,10 @@ public class Asignatura {
            double n = (4-this.getPromedio())/(this.getPonderacionFaltante()*0.01);
            return Utilidades.redondearNota(n);
        }
+    }
+
+    @Override
+    public String toString() {
+        return "Asignatura{"+this.getNombre()+ " "+this.getNotas()+"}";
     }
 }

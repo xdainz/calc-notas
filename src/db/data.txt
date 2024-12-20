@@ -1,0 +1,13 @@
+Asignatura
+Java
+Nota
+30
+4.0
+Asignatura
+BD
+Nota
+30
+2.0
+Nota
+40
+1.5
