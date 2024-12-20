@@ -1,5 +1,6 @@
 package models;
 
+import java.security.KeyPair;
 import java.util.ArrayList;
 
 public class Asignatura {
@@ -42,5 +43,22 @@ public class Asignatura {
             acum += (n.getPonderacion() *0.01) * n.getNota();
         }
         return Utilidades.redondearNota(acum);
+    }
+
+    public int getPonderacionFaltante(){
+       int acum = 100;
+       for (Nota n : this.notas){
+           acum -= n.getPonderacion();
+       }
+       return acum;
+    }
+
+    public double getNotaAprobado() throws Exception {
+       if (this.getPonderacionFaltante() == 0){
+           return 0;
+       } else {
+           double n = (4-this.getPromedio())/(this.getPonderacionFaltante()*0.01);
+           return Utilidades.redondearNota(n);
+       }
     }
 }
