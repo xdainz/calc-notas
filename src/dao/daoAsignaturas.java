@@ -1,6 +1,6 @@
 package dao;
 
-import models.Asignatura;
+import modelo.Asignatura;
 
 import java.util.ArrayList;
 

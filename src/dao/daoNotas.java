@@ -1,6 +1,6 @@
 package dao;
 
-import models.Nota;
+import modelo.Nota;
 
 import java.util.ArrayList;
 
