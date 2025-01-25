@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 public class Utilidades {
     
-    private static File data = new File("src/db/data.txt");
+    private static File data = new File("src/data/data.txt");
     private static ArrayList<String> rawData = new ArrayList<>();
     public static ArrayList<Asignatura> asignaturas = new ArrayList<>();
     
