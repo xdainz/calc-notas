@@ -9,7 +9,7 @@ public class Main {
 
             cvp.inicializar();
         } catch (Exception ex) {
-            Utilidades.error(null, ex.getMessage());
+            Utilidades.error(ex.getMessage());
         }
     }
     }
