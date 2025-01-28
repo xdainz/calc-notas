@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import modelo.Asignatura;
 import modelo.Nota;
@@ -39,7 +40,6 @@ public class VisualVistaPrincipal extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblNotas = new javax.swing.JTable();
         btnSave = new javax.swing.JButton();
-        btnCancel = new javax.swing.JButton();
         cmbAsig = new javax.swing.JComboBox<>();
         btnAgregarNota = new javax.swing.JButton();
         txtNota = new javax.swing.JTextField();
@@ -48,6 +48,10 @@ public class VisualVistaPrincipal extends javax.swing.JFrame {
         lblPonderacion = new javax.swing.JLabel();
         lblPromedio = new javax.swing.JLabel();
         lblPonderacionTotal = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        lblDisplayPonderacionTotal = new javax.swing.JLabel();
+        lblDisplayPromedio = new javax.swing.JLabel();
+        btnCalcNecesario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("x/dainz");
@@ -65,12 +69,22 @@ public class VisualVistaPrincipal extends javax.swing.JFrame {
             new String [] {
                 "Nota", "Ponderacion ( % )"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblNotas.setEnabled(false);
+        tblNotas.setFocusable(false);
+        tblNotas.setRequestFocusEnabled(false);
+        tblNotas.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tblNotas);
 
         btnSave.setText("Guardar");
-
-        btnCancel.setText("Cancelar");
 
         cmbAsig.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbAsig.addActionListener(new java.awt.event.ActionListener() {
@@ -89,45 +103,67 @@ public class VisualVistaPrincipal extends javax.swing.JFrame {
 
         lblPonderacionTotal.setText("Ponderación total:");
 
+        jLabel1.setText("%");
+
+        lblDisplayPonderacionTotal.setText("jLabel2");
+
+        lblDisplayPromedio.setText("jLabel2");
+
+        btnCalcNecesario.setText("Que nota necesito?");
+        btnCalcNecesario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalcNecesarioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblNota)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblPonderacion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPonderacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAgregarNota)
-                .addGap(43, 43, 43))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(lblPonderacionTotal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblDisplayPonderacionTotal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblPromedio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblDisplayPromedio)
+                        .addGap(17, 17, 17))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(btnCalcNecesario)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(lblNombreAsignatura)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbAsig, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(lblNota)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNota, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPonderacion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtPonderacion, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAgregarNota))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addComponent(btnCancel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblPonderacionTotal)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSave)
-                    .addComponent(lblPromedio))
-                .addGap(59, 59, 59))
+                        .addGap(35, 35, 35)
+                        .addComponent(lblNombreAsignatura)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbAsig, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,24 +172,27 @@ public class VisualVistaPrincipal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombreAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbAsig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPonderacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarNota)
                     .addComponent(txtNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNota)
-                    .addComponent(lblPonderacion))
+                    .addComponent(lblPonderacion)
+                    .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPonderacionTotal)
-                    .addComponent(lblPromedio))
-                .addGap(14, 14, 14)
+                    .addComponent(lblPromedio)
+                    .addComponent(lblDisplayPonderacionTotal)
+                    .addComponent(lblDisplayPromedio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21))
+                    .addComponent(btnCalcNecesario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17))
         );
 
         pack();
@@ -163,6 +202,10 @@ public class VisualVistaPrincipal extends javax.swing.JFrame {
     private void cmbAsigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAsigActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbAsigActionPerformed
+
+    private void btnCalcNecesarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcNecesarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCalcNecesarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -223,12 +266,25 @@ public class VisualVistaPrincipal extends javax.swing.JFrame {
         tblNotas.setModel(tabla);
     }
 
+    public void cargarPromedio(Asignatura asig) {
+        this.lblDisplayPromedio.setText(String.valueOf(asig.getPromedio()));
+        this.lblDisplayPonderacionTotal.setText(String.valueOf(asig.getPonderacionTotal()) + "%");
+    }
+    
+    public void limpiarAgregarNota(){
+        this.txtNota.setText("");
+        this.txtPonderacion.setText("");
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarNota;
-    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnCalcNecesario;
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox<String> cmbAsig;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblDisplayPonderacionTotal;
+    private javax.swing.JLabel lblDisplayPromedio;
     private javax.swing.JLabel lblNombreAsignatura;
     private javax.swing.JLabel lblNota;
     private javax.swing.JLabel lblPonderacion;
@@ -239,12 +295,12 @@ public class VisualVistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField txtPonderacion;
     // End of variables declaration//GEN-END:variables
 
-    public JButton getBtnCancel() {
-        return btnCancel;
-    }
-
     public JButton getBtnSave() {
         return btnSave;
+    }
+
+    public JButton getBtnCalcNecesario() {
+        return btnCalcNecesario;
     }
 
     public JLabel getLblNombreAsignatura() {
@@ -257,6 +313,26 @@ public class VisualVistaPrincipal extends javax.swing.JFrame {
 
     public JComboBox<String> getCmbAsig() {
         return cmbAsig;
+    }
+
+    public JButton getBtnAgregarNota() {
+        return btnAgregarNota;
+    }
+
+    public JLabel getLblDisplayPonderacionTotal() {
+        return lblDisplayPonderacionTotal;
+    }
+
+    public JLabel getLblDisplayPromedio() {
+        return lblDisplayPromedio;
+    }
+
+    public JTextField getTxtNota() {
+        return txtNota;
+    }
+
+    public JTextField getTxtPonderacion() {
+        return txtPonderacion;
     }
 
 }
