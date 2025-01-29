@@ -1,5 +1,6 @@
 package controlador;
 
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.Asignatura;
@@ -39,6 +40,15 @@ public class ControladorVistaPrincipal {
             try {
                 calcNecesario();
             } catch (Exception ex) {
+                Utilidades.error(ex.getMessage());
+            }
+        });
+
+        vista.getBtnSave().addActionListener((e) -> {
+            try {
+                Utilidades.writeData();
+                Utilidades.mostrarInfo("Se ha guardado con éxito.");
+            } catch (IOException ex) {
                 Utilidades.error(ex.getMessage());
             }
         });
