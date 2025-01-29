@@ -8,25 +8,25 @@ import modelo.Utilidades;
 import visual.VisualVistaPrincipal;
 
 public class ControladorVistaPrincipal {
-    
+
     private VisualVistaPrincipal vista;
-    
+
     public ControladorVistaPrincipal(VisualVistaPrincipal vista) {
         this.vista = vista;
-        
+
     }
-    
+
     public void inicializar() throws Exception {
         loadAsignaturas();
         vista.setVisible(true);
         loadNotas();
-        
+
         vista.getCmbAsig().addItemListener((e) -> {
             if (e.getStateChange() == 2) {
                 loadNotas();
             }
         });
-        
+
         vista.getBtnAgregarNota().addActionListener((e) -> {
             try {
                 agregarNotas();
@@ -34,7 +34,7 @@ public class ControladorVistaPrincipal {
                 Utilidades.error(ex.getMessage());
             }
         });
-        
+
         vista.getBtnCalcNecesario().addActionListener((e) -> {
             try {
                 calcNecesario();
@@ -43,16 +43,16 @@ public class ControladorVistaPrincipal {
             }
         });
     }
-    
+
     private void loadAsignaturas() throws Exception {
         Utilidades.checkData();
         vista.cargarAsignaturas();
-        
+
     }
-    
+
     private void loadNotas() {
         String holder = vista.getCmbAsig().getSelectedItem().toString();
-        
+
         for (Asignatura a : Utilidades.asignaturas) {
             if (a.getNombre().equals(holder)) {
                 vista.cargarNotas(a);
@@ -61,12 +61,12 @@ public class ControladorVistaPrincipal {
             }
         }
     }
-    
+
     private void agregarNotas() throws Exception {
         String holder = vista.getCmbAsig().getSelectedItem().toString();
         int pond = Integer.parseInt(vista.getTxtPonderacion().getText());
         double nota = Double.parseDouble(vista.getTxtNota().getText());
-        
+
         for (Asignatura a : Utilidades.asignaturas) {
             if (a.getNombre().equals(holder)) {
                 a.addNota(new Nota(pond, nota));
@@ -76,12 +76,12 @@ public class ControladorVistaPrincipal {
         vista.limpiarAgregarNota();
         loadNotas();
     }
-    
+
     private void calcNecesario() throws Exception {
         String holder = vista.getCmbAsig().getSelectedItem().toString();
         String pondRestante = "";
         String notaNecesaria = "";
-        
+
         for (Asignatura a : Utilidades.asignaturas) {
             if (a.getNombre().equals(holder)) {
                 pondRestante = String.valueOf((a.getPonderacionFaltante()));
@@ -89,6 +89,6 @@ public class ControladorVistaPrincipal {
                 break;
             }
         }
-        Utilidades.mostrarInfo(pondRestante + " " + notaNecesaria);
+        Utilidades.mostrarInfo("Se necesita un " + notaNecesaria + " en el " + pondRestante + "% restante.");
     }
 }
