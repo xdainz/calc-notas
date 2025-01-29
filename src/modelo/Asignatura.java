@@ -51,6 +51,14 @@ public class Asignatura {
        }
        return acum;
     }
+    
+    public int getPonderacionTotal(){
+       int acum = 0;
+       for (Nota n : this.notas){
+           acum += n.getPonderacion();
+       }
+       return acum;
+    }
 
     public double getNotaAprobado() throws Exception {
        if (this.getPonderacionFaltante() == 0){
