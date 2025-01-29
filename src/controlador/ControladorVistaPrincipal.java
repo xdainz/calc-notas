@@ -56,8 +56,8 @@ public class ControladorVistaPrincipal {
     
     private void agregarNotas() throws Exception {
         String holder = vista.getCmbAsig().getSelectedItem().toString();
-        int pond = Integer.valueOf(vista.getTxtPonderacion().getText());
-        double nota = Double.valueOf(vista.getTxtNota().getText());
+        int pond = Integer.parseInt(vista.getTxtPonderacion().getText());
+        double nota = Double.parseDouble(vista.getTxtNota().getText());
         
         for (Asignatura a : Utilidades.asignaturas) {
             if (a.getNombre().equals(holder)) {
