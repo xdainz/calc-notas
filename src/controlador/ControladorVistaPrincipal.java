@@ -34,6 +34,14 @@ public class ControladorVistaPrincipal {
                 Utilidades.error(ex.getMessage());
             }
         });
+        
+        vista.getBtnCalcNecesario().addActionListener((e) -> {
+            try {
+                calcNecesario();
+            } catch (Exception ex) {
+                Utilidades.error(ex.getMessage());
+            }
+        });
     }
     
     private void loadAsignaturas() throws Exception {
@@ -67,5 +75,20 @@ public class ControladorVistaPrincipal {
         }
         vista.limpiarAgregarNota();
         loadNotas();
+    }
+    
+    private void calcNecesario() throws Exception {
+        String holder = vista.getCmbAsig().getSelectedItem().toString();
+        String pondRestante = "";
+        String notaNecesaria = "";
+        
+        for (Asignatura a : Utilidades.asignaturas) {
+            if (a.getNombre().equals(holder)) {
+                pondRestante = String.valueOf((a.getPonderacionFaltante()));
+                notaNecesaria = String.valueOf(a.getNotaAprobado());
+                break;
+            }
+        }
+        Utilidades.mostrarInfo(pondRestante + " " + notaNecesaria);
     }
 }
