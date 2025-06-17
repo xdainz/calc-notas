@@ -37,6 +37,7 @@ public class Utilidades {
         while (reader.hasNextLine()) {
             rawData.add(reader.nextLine());
         }
+        reader.close();
         parseData();
     }
 
